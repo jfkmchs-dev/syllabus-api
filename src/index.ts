@@ -1,11 +1,14 @@
 import 'dotenv/config';
-import {drizzle} from 'drizzle-orm/node-postgres';
+import {drizzle} from 'drizzle-orm/bun-sql';
 import * as schema from './db/schema';
-import {app, httpServer, server} from "./server.ts";
+import {httpServer} from "./server.ts";
+import { SQL } from 'bun';
+
+console.log(SQL);
+const client = new SQL(process.env.DATABASE_URL!)
+export const db = drizzle({schema, client});
 
 export const SEARCH_THRESHOLD = 0.05;
-
-export const db = drizzle(process.env.DATABASE_URL!, { schema });
 
 await new Promise<void>((resolve) =>
     httpServer.listen({ port: 4000 }, resolve),

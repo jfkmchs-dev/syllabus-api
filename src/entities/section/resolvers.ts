@@ -1,5 +1,6 @@
 import {SectionQueries} from "./queries.ts";
 import {SectionMutations} from "./mutations.ts";
+import {db} from "../../index.ts";
 
 export const SectionResolvers = {
     Query: {
@@ -7,5 +8,49 @@ export const SectionResolvers = {
     },
     Mutation: {
         ...SectionMutations
+    },
+    Section: {
+        async submission(parent: any) {
+            return await db.query.submissions.findFirst({
+                where: (submissions, {eq}) => eq(submissions.id, parent.submissionId),
+                columns: {
+                    id: true,
+                    dateSubmitted: true,
+                    schoolId: true,
+                    className: true,
+                    professor: true,
+                    classLength: true,
+                    textbookCost: true,
+                    description: true,
+                    creatorEmail: true,
+                    creatorName: true,
+                    fileType: true,
+                    sectionId: true
+                }
+            })
+        },
+
+        async school(parent: any) {
+            return await db.query.schools.findFirst({
+                where: (schools, {eq}) => eq(schools.id, parent.schoolId),
+                columns: {
+                    id: true,
+                    shortName: true,
+                    fullName: true,
+                }
+            });
+        },
+
+        async class(parent: any) {
+            return await db.query.classes.findFirst({
+                where: (classes, {eq}) => eq(classes.id, parent.classId),
+                columns: {
+                    id: true,
+                    className: true,
+                    fullClassName: true,
+                    schoolId: true,
+                }
+            });
+        }
     }
 };

@@ -2,9 +2,9 @@ export const SectionTypes = `#graphql
     type Section {
         id: ID!
         # Null if not authorized
-        submissionId: ID
-        schoolId: ID!
-        classId: ID!
+        submission: Submission!
+        school: School!
+        class: Class!
         reviewed: Boolean!
         dateCreated: String!
         classLength: Int!

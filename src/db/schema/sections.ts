@@ -2,7 +2,7 @@ import {boolean, index, pgTable, smallint, timestamp, uuid, varchar} from "drizz
 import {schools} from "./schools.ts";
 import {classes} from "./classes.ts";
 import {relations, sql} from "drizzle-orm";
-import {professors, professorsToSections} from "./index.ts";
+import {professors} from "./index.ts";
 import {submissions} from "./submissions.ts";
 import {flags} from "./flags.ts";
 import {changes} from "./changes.ts";

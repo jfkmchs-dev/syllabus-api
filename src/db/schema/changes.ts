@@ -18,7 +18,6 @@ export const changes = pgTable('changes', {
     classId: uuid().notNull().references(() => classes.id),
     professorId: uuid().notNull().references(() => professors.id),
     classLength: smallint().notNull(),
-    comments: varchar().notNull(),
     content: varchar().notNull(),
     textbookCost: textbookCost().notNull(),
 });

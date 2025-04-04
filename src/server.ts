@@ -1,5 +1,5 @@
 import {ApolloServer} from '@apollo/server';
-import {SectionResolvers, SectionTypes} from "./graphql/section";
+import {SectionResolvers, SectionTypes} from "./entities/section";
 import lodash from 'lodash';
 import {ApolloServerPluginDrainHttpServer} from "@apollo/server/plugin/drainHttpServer";
 import http from "http";
@@ -7,6 +7,7 @@ import express from "express";
 import {expressMiddleware} from "@apollo/server/express4";
 import cors from "cors";
 import {authContext, generateToken} from "./auth.ts";
+import {typeDefs} from "./entities";
 
 const globalTypeDefs = `#graphql
     enum TextbookCost {
@@ -32,7 +33,7 @@ export const httpServer = http.createServer(app);
 export const server = new ApolloServer({
     csrfPrevention: false, // TODO: Enable this in production
     introspection: true,
-    typeDefs: [globalTypeDefs, SectionTypes],
+    typeDefs: [globalTypeDefs, ...typeDefs],
     resolvers: lodash.merge(SectionResolvers),
     plugins: [
         ApolloServerPluginDrainHttpServer({ httpServer })

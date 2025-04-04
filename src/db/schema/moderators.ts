@@ -1,4 +1,4 @@
-import {pgEnum, pgTable, uuid, varchar} from "drizzle-orm/pg-core";
+import {integer, pgEnum, pgTable, uuid, varchar} from "drizzle-orm/pg-core";
 import {relations} from "drizzle-orm";
 import {flags} from "./flags.ts";
 import {changes} from "./changes.ts";
@@ -9,6 +9,7 @@ export const moderators = pgTable('moderators', {
     permissionLevel: permissionLevel().notNull(),
     username: varchar().unique().notNull(),
     password: varchar().notNull(), // hashed
+    successfulChangeCount: integer().default(0),
 });
 export const moderatorRelations = relations(moderators, ({many}) => ({
     changes: many(changes),
