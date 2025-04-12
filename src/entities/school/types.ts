@@ -4,6 +4,10 @@ type School {
     id: ID!
     shortName: String!
     fullName: String!
+    classes: [Class!]!
+    professors: [Professor!]!
+    sections: [Section!]!
+    submissions: [Submission!]
 }
 
 extend type Query {
@@ -13,7 +17,7 @@ extend type Query {
 
 extend type Mutation {
     "Requires ADMIN"
-    createSchool(id: ID!, shortName: String!, longName: String!): School
+    createSchool(shortName: String!, longName: String!): School
     
     "Requires ADMIN"
     updateSchool(id: ID!, shortName: String!, longName: String!): School

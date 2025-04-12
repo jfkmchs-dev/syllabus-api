@@ -7,7 +7,9 @@ import express from "express";
 import {expressMiddleware} from "@apollo/server/express4";
 import cors from "cors";
 import {authContext, generateToken} from "./auth.ts";
-import {typeDefs} from "./entities";
+import {resolvers, typeDefs} from "./entities";
+import {SubmissionResolvers} from "./entities/submission";
+import {submissionRouter} from "./entities/submission/express.ts";
 
 const globalTypeDefs = `#graphql
     enum TextbookCost {
@@ -34,7 +36,7 @@ export const server = new ApolloServer({
     csrfPrevention: false, // TODO: Enable this in production
     introspection: true,
     typeDefs: [globalTypeDefs, ...typeDefs],
-    resolvers: lodash.merge(SectionResolvers),
+    resolvers: resolvers,
     plugins: [
         ApolloServerPluginDrainHttpServer({ httpServer })
     ],
@@ -50,6 +52,7 @@ app.use(
         context: authContext, // Example context setup
     })
 );
+app.use('/submissions', submissionRouter);
 
 app.post('/login', async (req, res) => {
     let token = await generateToken(req.body.username, req.body.password);

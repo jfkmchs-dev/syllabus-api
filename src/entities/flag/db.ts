@@ -1,6 +1,6 @@
 import {relations} from "drizzle-orm";
-import {moderators} from "./moderators.ts";
-import {sections} from "./sections.ts";
+import {moderators} from "../moderator/db.ts";
+import {sections} from "../section/db.ts";
 import {pgTable, timestamp, uuid, varchar} from "drizzle-orm/pg-core";
 
 export const flags = pgTable('flags', {

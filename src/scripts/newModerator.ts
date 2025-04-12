@@ -26,12 +26,13 @@ const existing = await db.query.moderators.findFirst({
 if (existing) {
     console.error("Username already exists.");
     process.exit(1);
-};
+}
 
 let hashedPassword = await argon2.hash(password);
 
+// @ts-ignore
 const result = await db.insert(schema.moderators).values({
-    username,
+    username: username as 'MODERATOR' | 'ADMIN',
     password: hashedPassword,
     permissionLevel,
 }).returning();

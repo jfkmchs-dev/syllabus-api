@@ -10,7 +10,9 @@ export const SectionResolvers = {
         ...SectionMutations
     },
     Section: {
-        async submission(parent: any) {
+        async submission(parent: any, _args: any, context: {moderatorUuid?: string}) {
+            if (!context.moderatorUuid) return null;
+
             return await db.query.submissions.findFirst({
                 where: (submissions, {eq}) => eq(submissions.id, parent.submissionId),
                 columns: {
@@ -51,6 +53,17 @@ export const SectionResolvers = {
                     schoolId: true,
                 }
             });
-        }
+        },
+
+        async professor(parent: any) {
+            return await db.query.professors.findFirst({
+                where: (professors, {eq}) => eq(professors.id, parent.professorId),
+                columns: {
+                    id: true,
+                    name: true,
+                    schoolId: true,
+                }
+            });
+        },
     }
 };

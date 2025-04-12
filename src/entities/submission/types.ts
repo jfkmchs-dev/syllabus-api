@@ -11,7 +11,7 @@ type Submission {
     creatorEmail: String
     creatorName: String
     fileType: String!
-    sectionId: String
+    section: Section
 }
 
 extend type Query {
@@ -19,7 +19,9 @@ extend type Query {
     submission(id: ID!): Submission
     
     "Gets all submissions. Requires MODERATOR"
-    submissions: [Submission!]!
+    submissions: [Submission!]
+    
+    outstandingSubmissions: [Submission!]
 }
 
 extend type Mutation {

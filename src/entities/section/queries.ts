@@ -1,7 +1,6 @@
 import {db, SEARCH_THRESHOLD} from "../../index.ts";
 import {sections} from "../../db/schema";
 import {and, eq, SQL, sql} from "drizzle-orm";
-
 export const SectionQueries = {
     async section(_: any, args: {id: string}) {
         let result = await db.query.sections.findFirst({
@@ -12,7 +11,7 @@ export const SectionQueries = {
 
         return {
             ...result,
-            dateCreated: result.dateCreated.toISOString(),
+            dateCreated: result.dateCreated?.toISOString(),
         }
     },
     async searchSections(_: any, args: {
@@ -23,7 +22,11 @@ export const SectionQueries = {
         schoolId?: string,
         classId?: string
     }) {
-        let filters: SQL[] = [];
+        let filters: SQL[] = [
+            sql`${sections.content} <> ''`, // filter out empty content
+            sql`${sections.classLength} > 0 AND ${sections.classLength} IS NOT NULL`, // filter out empty class length
+            sql`${sections.textbookCost} IS NOT NULL`, // filter out empty textbook cost
+        ];
 
         // if (args.professorId) filters.push(eq(sections.professorId, args.professorId)); // TODO
         if (args.schoolId) filters.push(eq(sections.schoolId, args.schoolId));
@@ -41,6 +44,8 @@ export const SectionQueries = {
                 comments: sections.comments,
                 content: sections.content,
                 textbookCost: sections.textbookCost,
+
+                // Ranking search using index
                 rank: sql`word_similarity(
                     (
                         class_name || ' ' ||
@@ -51,11 +56,7 @@ export const SectionQueries = {
                 ) AS rank`
             })
             .from(sections)
-            .where(
-                and(
-                    ...filters
-                )
-            )
+            .where(and(...filters))
             .groupBy(
                 sections.id, sections.submissionId, sections.schoolId, sections.classId,
                 sections.reviewed, sections.dateCreated, sections.classLength,
@@ -69,13 +70,14 @@ export const SectionQueries = {
                         professor_name
                     ), 
                     ${args.query}
-                ) > ${SEARCH_THRESHOLD}`)
+                ) > ${SEARCH_THRESHOLD}`
+            ) // minimum similarity threshold
             .orderBy(sql`rank DESC`)
             .offset(args.skip)
             .limit(args.take)
             .execute();
 
-        results.map(({rank, ...rest}) => rest);
+        results.map(({rank, ...rest}) => rest); // remove rank from the result
         return results;
     }
 }

@@ -4,6 +4,13 @@ import 'dotenv/config';
 import jwt from "jsonwebtoken";
 import type {BaseContext, ContextFunction} from "@apollo/server";
 import type {ExpressContextFunctionArgument} from "@apollo/server/express4";
+import {moderators} from "./db/schema";
+import {eq} from "drizzle-orm";
+
+export interface AuthContext {
+    uuid: string | null;
+    authLevel: 'ADMIN' | 'MODERATOR' | null;
+}
 
 export async function generateToken(email: string, password: string) {
     const result = await db.query.moderators.findFirst({
@@ -31,18 +38,32 @@ export async function getModeratorID(token: string) {
     }
 }
 
-export const authContext: ContextFunction<[ExpressContextFunctionArgument], BaseContext> = async ({ req }) => {
+export const dummyAuthContext: ContextFunction<[ExpressContextFunctionArgument], AuthContext> = async ({ req }) => {
+    return {
+        uuid: null,
+        authLevel: null
+    }
+}
+
+export const authContext: ContextFunction<[ExpressContextFunctionArgument], AuthContext> = async ({ req }) => {
     const token = req.headers.authorization?.split(" ")[1];
 
     if (!token) {
-        return {moderatorUuid: null};
+        return { uuid: null, authLevel: null};
     }
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET!) as jwt.JwtPayload;
-        return {moderatorUuid: decoded.id};
+        const result = (await db.select({
+            authLevel: moderators.permissionLevel
+        })
+            .from(moderators)
+            .where(eq(moderators.id, decoded.id)))[0]
+        if (!result) {
+            return { uuid: null, authLevel: null};
+        }
+        return { uuid: decoded.id, authLevel: result.authLevel};
     } catch (e) {
-        console.error(e);
-        return {moderatorUuid: null};
+        return { uuid: null, authLevel: null};
     }
 }

@@ -1,9 +1,9 @@
 import {pgTable, uuid, varchar} from "drizzle-orm/pg-core";
 import {relations} from "drizzle-orm";
-import {classes} from "./classes.ts";
-import {professors} from "./professors.ts";
-import {sections} from "./sections.ts";
-import {submissions} from "./submissions.ts";
+import {classes} from "../class/db.ts";
+import {professors} from "../professor/db.ts";
+import {sections} from "../section/db.ts";
+import {submissions} from "../submission/db.ts";
 
 export const schools = pgTable('schools', {
     id: uuid().defaultRandom().primaryKey(),

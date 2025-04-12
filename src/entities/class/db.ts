@@ -1,7 +1,7 @@
 import {pgTable, uuid, varchar} from "drizzle-orm/pg-core";
 import {relations} from "drizzle-orm";
 
-import {schools} from "./schools.ts";
+import {schools} from "../school/db.ts";
 
 export const classes = pgTable('classes', {
     id: uuid().defaultRandom().primaryKey(),

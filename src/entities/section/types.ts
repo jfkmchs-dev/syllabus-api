@@ -2,9 +2,10 @@ export const SectionTypes = `#graphql
     type Section {
         id: ID!
         # Null if not authorized
-        submission: Submission!
+        submission: Submission
         school: School!
         class: Class!
+        professor: Professor!
         reviewed: Boolean!
         dateCreated: String!
         classLength: Int!
@@ -28,33 +29,33 @@ export const SectionTypes = `#graphql
     extend type Mutation {
         "Creates a new section. Null if not authorized."
         createSection(
-            submissionId: ID
-            schoolId: ID!
-            classId: ID!
-            classLength: Int!
-            comments: String
-            content: String!
-            textbookCost: TextbookCost!
-        ): Section
-        
-        "Creates a new section from a submission. Null if not authorized."
-        createSectionFromSubmission(
             submissionId: ID!
-            schoolId: ID!
             classId: ID!
-            content: String!
-            fullClassName: String!
+            professorId: ID!
             
+            "Markdown Content. Optional, but sections without content will not show up in search results."
+            content: String
+            
+            "Optional, but sections without content will not show up in search results."
+            classLength: Int
+            
+            "Optional, but sections without content will not show up in search results."
+            textbookCost: TextbookCost
         ): Section
         
-        updateSection(
-            submissionId: ID
-            schoolId: ID!
-            classId: ID!
-            classLength: Int!
+        updateSectionMetadata(
+            sectionId: ID!
+            classId: ID
+            professorId: ID
+            classLength: Int
             comments: String
-            content: String!
-            textbookCost: TextbookCost!
+            content: String
+            textbookCost: TextbookCost
+        ): Section!
+        
+        updateSectionContent(
+            sectionId: ID!
+            newContent: String!
         ): Section!
     
         deleteSection(id: ID!): Boolean!

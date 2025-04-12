@@ -1,36 +1,42 @@
 import {boolean, index, pgTable, smallint, timestamp, uuid, varchar} from "drizzle-orm/pg-core";
-import {schools} from "./schools.ts";
-import {classes} from "./classes.ts";
+import {schools} from "../school/db.ts";
+import {classes} from "../class/db.ts";
 import {relations, sql} from "drizzle-orm";
-import {professors} from "./index.ts";
-import {submissions} from "./submissions.ts";
-import {flags} from "./flags.ts";
-import {changes} from "./changes.ts";
-import {reports} from "./reports.ts";
-import {textbookCost} from "./textbookCost.ts";
+import {professors} from "../../db/schema";
+import {submissions} from "../submission/db.ts";
+import {flags} from "../flag/db.ts";
+import {changes} from "../change/db.ts";
+import {reports} from "../report/db.ts";
+import {textbookCost} from "../../db/schema/textbookCost.ts";
 
 export const sections = pgTable('sections', {
     id: uuid().defaultRandom().primaryKey(),
-    submissionId: uuid('submission_id').references(() => submissions.id).notNull(),
-    schoolId: uuid('school_id').references(() => schools.id).notNull(),
-    professorId: uuid('professor_id').references(() => professors.id).notNull(),
-    className: varchar('class_name').notNull(),
-    fullClassName: varchar('full_class_name').notNull(),
-    professorName: varchar('professor_name').notNull(),
     reviewed: boolean().default(false).notNull(),
     dateCreated: timestamp('date_created').defaultNow().notNull(),
-    classLength: smallint().notNull(),
-    comments: varchar(),
-    content: varchar().notNull(),
-    textbookCost: textbookCost().notNull(),
+
+    submissionId: uuid('submission_id').references(() => submissions.id).notNull(),
+
+    schoolId: uuid('school_id').references(() => schools.id).notNull(),
+
+    professorId: uuid('professor_id').references(() => professors.id).notNull(),
+    professorName: varchar('professor_name').notNull(),
+
     classId: uuid('class_id').references(() => classes.id),
-}, table => ({
-    searchIndex: index('sections_trgm_index').using('gin', sql`(
+    className: varchar('class_name').notNull(),
+    fullClassName: varchar('full_class_name').notNull(),
+
+    content: varchar(),
+
+    classLength: smallint(),
+    comments: varchar(),
+    textbookCost: textbookCost(),
+}, table => [
+    index('sections_trgm_index').using('gin', sql`(
         class_name || ' ' || 
         full_class_name || ' ' ||
         professor_name
     ) gin_trgm_ops`),
-}));
+]);
 
 export const sectionRelations = relations(sections, ({one, many}) => ({
     professor: one(professors, {

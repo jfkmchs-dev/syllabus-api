@@ -1,7 +1,7 @@
 import {integer, pgEnum, pgTable, uuid, varchar} from "drizzle-orm/pg-core";
 import {relations} from "drizzle-orm";
-import {flags} from "./flags.ts";
-import {changes} from "./changes.ts";
+import {flags} from "../flag/db.ts";
+import {changes} from "../change/db.ts";
 
 export const permissionLevel = pgEnum('permission_level', ['MODERATOR', 'ADMIN'])
 export const moderators = pgTable('moderators', {

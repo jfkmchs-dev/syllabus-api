@@ -1,11 +1,11 @@
 import {pgTable, smallint, timestamp, uuid, varchar} from "drizzle-orm/pg-core";
-import {moderators} from "./moderators.ts";
-import {sections} from "./sections.ts";
-import {classes} from "./classes.ts";
-import {professors} from "./professors.ts";
+import {moderators} from "../moderator/db.ts";
+import {sections} from "../section/db.ts";
+import {classes} from "../class/db.ts";
+import {professors} from "../professor/db.ts";
 import {relations} from "drizzle-orm";
 
-import {textbookCost} from "./textbookCost.ts";
+import {textbookCost} from "../../db/schema";
 
 export const changes = pgTable('changes', {
     id: uuid().defaultRandom().primaryKey(),

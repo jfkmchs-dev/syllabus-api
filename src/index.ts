@@ -4,9 +4,10 @@ import * as schema from './db/schema';
 import {httpServer} from "./server.ts";
 import { SQL } from 'bun';
 
-console.log(SQL);
+export const ROOT_FOLDER = `${import.meta.dir}/..`;
+
 const client = new SQL(process.env.DATABASE_URL!)
-export const db = drizzle({schema, client});
+export const db = drizzle({schema, client, logger: true});
 
 export const SEARCH_THRESHOLD = 0.05;
 
