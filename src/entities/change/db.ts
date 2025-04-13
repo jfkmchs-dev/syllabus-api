@@ -5,7 +5,9 @@ import {classes} from "../class/db.ts";
 import {professors} from "../professor/db.ts";
 import {relations} from "drizzle-orm";
 
-import {textbookCost} from "../../db/schema";
+// noinspection ES6PreferShortImport
+import {textbookCost} from "../textbookCost.ts";
+import {ChangeStatus, changeStatus} from "../changeStatus.ts";
 
 export const changes = pgTable('changes', {
     id: uuid().defaultRandom().primaryKey(),
@@ -13,6 +15,7 @@ export const changes = pgTable('changes', {
     date: timestamp().defaultNow(),
     moderatorId: uuid().notNull().references(() => moderators.id),
     sectionId: uuid().notNull().references(() => sections.id),
+    status: changeStatus().default(ChangeStatus.PENDING),
 
     // section fields
     classId: uuid().notNull().references(() => classes.id),

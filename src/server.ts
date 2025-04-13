@@ -11,22 +11,7 @@ import {resolvers, typeDefs} from "./entities";
 import {SubmissionResolvers} from "./entities/submission";
 import {submissionRouter} from "./entities/submission/express.ts";
 
-const globalTypeDefs = `#graphql
-    enum TextbookCost {
-        FREE,
-        CHEAP,
-        MODERATE,
-        EXPENSIVE
-    }
 
-    type Query {
-        _empty: String
-    }
-
-    type Mutation {
-        _empty: String
-    }
-`
 
 export const app = express();
 
@@ -35,9 +20,8 @@ export const httpServer = http.createServer(app);
 export const server = new ApolloServer({
     csrfPrevention: false, // TODO: Enable this in production
     introspection: true,
-    playground: true,
-    typeDefs: [globalTypeDefs, ...typeDefs],
-    resolvers: resolvers,
+    typeDefs,
+    resolvers,
     plugins: [
         ApolloServerPluginDrainHttpServer({ httpServer })
     ],

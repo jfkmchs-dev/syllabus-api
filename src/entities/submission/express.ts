@@ -3,8 +3,8 @@ import fileUpload from 'express-fileupload';
 import {isArray} from "lodash";
 import {db, ROOT_FOLDER} from "../../index.ts";
 import {submissions} from "./db.ts";
-import type {TextbookCost} from "../section/mutations.ts";
 import {extension, lookup} from "mime-types";
+import {TextbookCost} from "../../db/schema.ts";
 
 const router: express.Router = express.Router();
 

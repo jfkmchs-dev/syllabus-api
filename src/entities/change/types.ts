@@ -1,13 +1,22 @@
 export const ChangeTypes = `#graphql
 
+enum Status {
+    PENDING,
+    APPROVED,
+    DENIED
+}
+
 type Change {
     id: ID!
     reason: String!
     date: String!
-    moderatorId: ID!
-    sectionId: ID!
-    classId: ID!
-    professorId: ID!
+    moderator: Moderator!
+    section: Section!
+    
+    status: Status!
+    
+    class: Class!
+    professor: Professor!
     classLength: Int!
     content: String!
     textbookCost: TextbookCost!
@@ -19,6 +28,8 @@ extend type Query {
         query: String!
         skip: Int!
         take: Int!
+        
+        status: Status
         sectionId: ID
         classId: ID
         professorId: ID
@@ -28,7 +39,6 @@ extend type Query {
 extend type Mutation {
     "Suggests a change to a syllabus, requires MODERATOR role"
     createChange(
-        id: ID!
         reason: String!
         date: String!
         sectionId: ID!

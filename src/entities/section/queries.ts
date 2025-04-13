@@ -1,5 +1,5 @@
 import {db, SEARCH_THRESHOLD} from "../../index.ts";
-import {sections} from "../../db/schema";
+import {sections} from "../../db/schema.ts";
 import {and, eq, SQL, sql} from "drizzle-orm";
 export const SectionQueries = {
     async section(_: any, args: {id: string}) {

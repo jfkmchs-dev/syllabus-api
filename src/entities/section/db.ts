@@ -2,12 +2,12 @@ import {boolean, index, pgTable, smallint, timestamp, uuid, varchar} from "drizz
 import {schools} from "../school/db.ts";
 import {classes} from "../class/db.ts";
 import {relations, sql} from "drizzle-orm";
-import {professors} from "../../db/schema";
+import {professors} from "../../db/schema.ts";
 import {submissions} from "../submission/db.ts";
 import {flags} from "../flag/db.ts";
 import {changes} from "../change/db.ts";
 import {reports} from "../report/db.ts";
-import {textbookCost} from "../../db/schema/textbookCost.ts";
+import {textbookCost} from "../textbookCost.ts";
 
 export const sections = pgTable('sections', {
     id: uuid().defaultRandom().primaryKey(),

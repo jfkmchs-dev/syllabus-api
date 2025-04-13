@@ -1,15 +1,8 @@
 import {db} from "../../index.ts";
-import {sections, textbookCost} from "../../db/schema";
+import {sections, TextbookCost} from "../../db/schema.ts";
 import {GraphQLError} from "graphql/error";
 import type {AuthContext} from "../../auth.ts";
 import {eq} from "drizzle-orm";
-
-export enum TextbookCost {
-    FREE = 'FREE',
-    CHEAP = 'CHEAP',
-    MODERATE = 'MODERATE',
-    EXPENSIVE = 'EXPENSIVE'
-}
 
 export const SectionMutations = {
     async createSection(_: any, args: {

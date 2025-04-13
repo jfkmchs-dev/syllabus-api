@@ -3,7 +3,8 @@ export const ProfessorTypes = `#graphql
 type Professor {
     id: ID!
     name: String!
-    schoolId: ID!
+    school: School!
+    sections: [Section!]!
 }
 
 extend type Query {

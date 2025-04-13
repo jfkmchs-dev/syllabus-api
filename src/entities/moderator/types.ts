@@ -5,6 +5,8 @@ type Moderator {
     permissionLevel: String!
     username: String!
     successfulChangeCount: Int!
+    changes: [Change!]!
+    flags: [Flag!]!
 }
 
 extend type Query {

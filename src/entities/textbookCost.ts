@@ -6,3 +6,10 @@ export const textbookCost = pgEnum('textbook_cost', [
     'MODERATE',
     'EXPENSIVE'
 ]);
+
+export enum TextbookCost {
+    FREE = 'FREE',
+    CHEAP = 'CHEAP',
+    MODERATE = 'MODERATE',
+    EXPENSIVE = 'EXPENSIVE'
+}

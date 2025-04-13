@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import {drizzle} from 'drizzle-orm/bun-sql';
-import * as schema from './db/schema';
+import * as schema from './db/schema.ts';
 import {httpServer} from "./server.ts";
 import { SQL } from 'bun';
 

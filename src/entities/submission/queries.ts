@@ -1,6 +1,6 @@
 import {ApolloServer} from "@apollo/server";
 import {db, SEARCH_THRESHOLD} from "../../index.ts";
-import {sections, submissions} from "../../db/schema";
+import {sections, submissions} from "../../db/schema.ts";
 import {and, eq, SQL, sql} from "drizzle-orm";
 
 export const SubmissionQueries = {

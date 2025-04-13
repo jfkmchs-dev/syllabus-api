@@ -3,7 +3,7 @@ import {schools} from "../school/db.ts";
 import {relations} from "drizzle-orm";
 import {sections} from "../section/db.ts";
 
-import {textbookCost} from "../../db/schema/textbookCost.ts";
+import {textbookCost} from "../textbookCost.ts";
 
 export const submissions = pgTable('submissions', {
     // Required fields

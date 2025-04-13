@@ -10,8 +10,27 @@ import {ChangeTypes} from "./change/types.ts";
 import lodash from "lodash";
 import {SchoolResolvers} from "./school/resolvers.ts";
 import {ClassResolvers} from "./class/resolvers.ts";
+import {ProfessorResolvers} from "./professor/resolvers.ts";
+
+const GlobalTypes = `#graphql
+enum TextbookCost {
+    FREE,
+    CHEAP,
+    MODERATE,
+    EXPENSIVE
+}
+
+type Query {
+    _empty: String
+}
+
+type Mutation {
+    _empty: String
+}
+`
 
 export const typeDefs = [
+    GlobalTypes,
     SubmissionTypes,
     SectionTypes,
     SchoolTypes,
@@ -35,5 +54,6 @@ export const resolvers = lodash.merge(
     SubmissionResolvers,
     SectionResolvers,
     SchoolResolvers,
-    ClassResolvers
+    ClassResolvers,
+    ProfessorResolvers,
 )

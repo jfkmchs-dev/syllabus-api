@@ -4,7 +4,7 @@ import 'dotenv/config';
 import jwt from "jsonwebtoken";
 import type {BaseContext, ContextFunction} from "@apollo/server";
 import type {ExpressContextFunctionArgument} from "@apollo/server/express4";
-import {moderators} from "./db/schema";
+import {moderators} from "./db/schema.ts";
 import {eq} from "drizzle-orm";
 
 export interface AuthContext {
