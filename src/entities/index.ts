@@ -9,6 +9,7 @@ import {ClassTypes} from "./class/types.ts";
 import {ChangeTypes} from "./change/types.ts";
 import lodash from "lodash";
 import {SchoolResolvers} from "./school/resolvers.ts";
+import {ClassResolvers} from "./class/resolvers.ts";
 
 export const typeDefs = [
     SubmissionTypes,
@@ -33,5 +34,6 @@ export const resolvers = lodash.merge(
     },
     SubmissionResolvers,
     SectionResolvers,
-    SchoolResolvers
+    SchoolResolvers,
+    ClassResolvers
 )

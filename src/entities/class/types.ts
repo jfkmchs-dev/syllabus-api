@@ -4,7 +4,8 @@ type Class {
     id: ID!
     className: String!
     fullClassName: String!
-    schoolId: ID!
+    school: School!
+    sections: [Section!]!
 }
 
 extend type Query {

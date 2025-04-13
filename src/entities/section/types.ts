@@ -12,6 +12,10 @@ export const SectionTypes = `#graphql
         comments: String
         content: String!
         textbookCost: TextbookCost!
+        
+        reports: [Report!]!
+        changes: [Change!]!
+        flags: [Flag!]!
     }
     
     extend type Query {

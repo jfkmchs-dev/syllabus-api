@@ -35,6 +35,7 @@ export const httpServer = http.createServer(app);
 export const server = new ApolloServer({
     csrfPrevention: false, // TODO: Enable this in production
     introspection: true,
+    playground: true,
     typeDefs: [globalTypeDefs, ...typeDefs],
     resolvers: resolvers,
     plugins: [

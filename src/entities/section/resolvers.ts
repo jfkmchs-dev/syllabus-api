@@ -31,7 +31,6 @@ export const SectionResolvers = {
                 }
             })
         },
-
         async school(parent: any) {
             return await db.query.schools.findFirst({
                 where: (schools, {eq}) => eq(schools.id, parent.schoolId),
@@ -42,7 +41,6 @@ export const SectionResolvers = {
                 }
             });
         },
-
         async class(parent: any) {
             return await db.query.classes.findFirst({
                 where: (classes, {eq}) => eq(classes.id, parent.classId),
@@ -54,7 +52,6 @@ export const SectionResolvers = {
                 }
             });
         },
-
         async professor(parent: any) {
             return await db.query.professors.findFirst({
                 where: (professors, {eq}) => eq(professors.id, parent.professorId),
@@ -65,5 +62,27 @@ export const SectionResolvers = {
                 }
             });
         },
+        async reports(parent: any) {
+            return await db.query.reports.findMany({
+                where: (reports, {eq}) => eq(reports.sectionId, parent.id),
+                columns: {
+                    id: true,
+                    sectionId: true,
+                    date: true,
+                    body: true,
+                    authorEmail: true
+                }
+            });
+        },
+        async changes(parent: any) {
+            return await db.query.changes.findMany({
+                where: (changes, {eq}) => eq(changes.sectionId, parent.id),
+            });
+        },
+        async flags(parent: any) {
+            return await db.query.flags.findMany({
+                where: (flags, {eq}) => eq(flags.sectionId, parent.id)
+            });
+        }
     }
 };
