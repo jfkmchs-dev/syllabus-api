@@ -3,6 +3,7 @@ import {changes} from "./db.ts";
 import {eq} from "drizzle-orm";
 import {sections} from "../section/db.ts";
 import {TextbookCost} from "../../db/schema.ts";
+import type {AuthContext} from "../../auth.ts";
 
 export const ChangeMutations = {
     async createChange(
@@ -16,7 +17,8 @@ export const ChangeMutations = {
             classLength: number;
             content: string;
             textbookCost: number;
-        }
+        },
+        ctx: AuthContext,
     ) {
         const { reason, date, sectionId, classId, professorId, classLength, content, textbookCost } = args;
 
@@ -29,6 +31,7 @@ export const ChangeMutations = {
                 date,
                 sectionId,
                 classId,
+                moderatorId: ctx.uuid,
                 professorId,
                 classLength,
                 content,
@@ -49,7 +52,7 @@ export const ChangeMutations = {
             classLength: number;
             content: string;
             textbookCost: TextbookCost;
-        }
+        },
     ) {
         const { id, reason, date, sectionId, classId, professorId, classLength, content, textbookCost } = args;
 

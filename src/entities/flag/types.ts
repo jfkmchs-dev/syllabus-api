@@ -5,8 +5,9 @@ type Flag {
     id: ID!
     reason: String!
     dateCreated: String!
-    moderatorId: ID!
-    sectionId: ID!
+    moderator: Moderator!
+    section: Section!
+    status: ChangeStatus!
 }
 
 extend type Query {
@@ -14,7 +15,13 @@ extend type Query {
     flag(id: ID!): Flag
     
     "Requires ADMIN to access all flags, otherwise only flags for the current moderator"
-    searchFlags(id: ID!, skip: Int!, take: Int!, schoolId: ID, moderatorId: ID): [Flag!]!
+    flags(
+        skip: Int!, 
+        take: Int!, 
+        schoolId: ID, 
+        moderatorId: ID,
+        status: ChangeStatus
+    ): [Flag!]!
 }
 
 extend type Mutation {
