@@ -13,7 +13,7 @@ export const SectionMutations = {
         content?: string,
         textbookCost?: 'FREE' | 'CHEAP' | 'MODERATE' | 'EXPENSIVE'
     }, context: AuthContext) {
-        // if (!context.uuid) return null;
+        if (!context.uuid) return null;
 
         let submission = await db.query.submissions.findFirst({
             where: (submissions, {eq}) => eq(submissions.id, args.submissionId),
@@ -64,12 +64,12 @@ export const SectionMutations = {
         content?: string,
         textbookCost?: TextbookCost
     }, context: AuthContext) {
-        // if (!context.uuid) return null;
+        if (!context.uuid) return null;
         if (!args.classId && !args.professorId && !args.classLength && !args.comments && !args.content && !args.textbookCost) {
             throw new GraphQLError("Nothing to update");
         }
-        // @ts-ignore
-        // if (!context.authLevel != 'ADMIN') return null;
+
+        if (context.authLevel != 'ADMIN') return null;
 
         let result = await db.update(sections).set({
             classId: args.classId,
@@ -94,6 +94,7 @@ export const SectionMutations = {
         newContent: string
     }, context: AuthContext) {
         if (!context.uuid) return null;
+        if (context.authLevel != 'ADMIN') return null;
 
         let result = await db.update(sections).set({
             content: args.newContent

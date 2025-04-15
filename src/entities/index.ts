@@ -1,5 +1,6 @@
-import {SubmissionResolvers, SubmissionTypes} from "./submission";
-import {SectionResolvers, SectionTypes} from "./section";
+
+import {SubmissionTypes} from "./submission/types.ts";
+import {SectionTypes} from "./section/types.ts";
 import {SchoolTypes} from "./school/types.ts";
 import {ReportTypes} from "./report/types.ts";
 import {ProfessorTypes} from "./professor/types.ts";
@@ -7,14 +8,16 @@ import {ModeratorTypes} from "./moderator/types.ts";
 import {FlagTypes} from "./flag/types.ts";
 import {ClassTypes} from "./class/types.ts";
 import {ChangeTypes} from "./change/types.ts";
-import lodash from "lodash";
 import {SchoolResolvers} from "./school/resolvers.ts";
 import {ClassResolvers} from "./class/resolvers.ts";
 import {ProfessorResolvers} from "./professor/resolvers.ts";
 import {ModeratorResolvers} from "./moderator/resolvers.ts";
+import {SectionResolvers} from "./section/resolvers.ts";
 import {ChangeResolvers} from "./change/resolvers.ts";
 import {FlagResolvers} from "./flag/resolvers.ts";
 import {ReportResolvers} from "./report/resolvers.ts";
+import {SubmissionResolvers} from "./submission/resolvers.ts";
+import lodash from "lodash";
 
 const GlobalTypes = `#graphql
 enum TextbookCost {

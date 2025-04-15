@@ -1,6 +1,8 @@
 import {SubmissionQueries} from "./queries.ts";
 import {SubmissionMutations} from "./mutations.ts";
 import {db} from "../../index.ts";
+import {schools} from "../school/db.ts";
+import {eq} from "drizzle-orm";
 
 export const SubmissionResolvers = {
     Query: {
@@ -23,6 +25,13 @@ export const SubmissionResolvers = {
                 ...result,
                 dateCreated: result.dateCreated?.toISOString(),
             }
+        },
+        async school(parent: any) {
+            return db
+                .select()
+                .from(schools)
+                .where(eq(schools.id, parent.schoolId))
+                .then((res) => res[0]);
         }
     }
 };

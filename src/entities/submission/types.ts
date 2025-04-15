@@ -2,7 +2,6 @@ export const SubmissionTypes = `#graphql
 type Submission {
     id: ID!
     dateSubmitted: String!
-    schoolId: ID!
     className: String!
     professor: String!
     classLength: Int
@@ -12,6 +11,7 @@ type Submission {
     creatorName: String
     fileType: String!
     section: Section
+    school: School!
 }
 
 extend type Query {
@@ -21,6 +21,7 @@ extend type Query {
     "Gets all submissions. Requires MODERATOR"
     submissions: [Submission!]
     
+    "Gets all submissions that do not have a section. Requires MODERATOR"
     outstandingSubmissions: [Submission!]
 }
 
