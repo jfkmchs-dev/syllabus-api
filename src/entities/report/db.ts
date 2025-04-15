@@ -1,4 +1,4 @@
-import {pgTable, uuid, varchar} from "drizzle-orm/pg-core";
+import {pgTable, timestamp, uuid, varchar} from "drizzle-orm/pg-core";
 import {relations} from "drizzle-orm";
 import {sections} from "../section/db.ts";
 
@@ -7,7 +7,7 @@ export const reports = pgTable('reports', {
     type: varchar().notNull(),
     title: varchar().notNull(),
     body: varchar().notNull(),
-    date: varchar().notNull(),
+    dateCreated: timestamp().defaultNow(),
     authorEmail: varchar().notNull(),
     sectionId: uuid().notNull()
 });

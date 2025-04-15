@@ -2,6 +2,7 @@ import {db} from "../../index.ts";
 import {flags} from "./db.ts";
 import {eq} from "drizzle-orm";
 import type {AuthContext} from "../../auth.ts";
+import type {ChangeStatus} from "../changeStatus.ts";
 
 export const FlagMutations = {
     async createFlag(_: any, args: { sectionId: string; reason: string}, ctx: AuthContext) {
@@ -10,6 +11,7 @@ export const FlagMutations = {
         return await db
             .insert(flags)
             .values({
+                reason,
                 sectionId,
                 moderatorId: ctx.uuid
             })
@@ -17,7 +19,7 @@ export const FlagMutations = {
             .then((res) => res[0]);
     },
 
-    async updateFlag(_: any, args: { id: string; sectionId: string; moderatorId: string; status: string }) {
+    async updateFlag(_: any, args: { id: string; sectionId: string; moderatorId: string; status: ChangeStatus }) {
         const { id, sectionId, moderatorId, status } = args;
 
         return await db

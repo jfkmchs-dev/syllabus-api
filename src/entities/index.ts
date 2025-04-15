@@ -13,6 +13,8 @@ import {ClassResolvers} from "./class/resolvers.ts";
 import {ProfessorResolvers} from "./professor/resolvers.ts";
 import {ModeratorResolvers} from "./moderator/resolvers.ts";
 import {ChangeResolvers} from "./change/resolvers.ts";
+import {FlagResolvers} from "./flag/resolvers.ts";
+import {ReportResolvers} from "./report/resolvers.ts";
 
 const GlobalTypes = `#graphql
 enum TextbookCost {
@@ -60,4 +62,6 @@ export const resolvers = lodash.merge(
     ProfessorResolvers,
     ModeratorResolvers,
     ChangeResolvers,
+    FlagResolvers,
+    ReportResolvers,
 )

@@ -7,7 +7,7 @@ type Report {
     body: String!
     dateCreated: String!
     authorEmail: String!
-    sectionId: ID!
+    section: Section!
 }
 
 extend type Query {
@@ -25,14 +25,6 @@ extend type Mutation {
         body: String!
         authorEmail: String!
         sectionId: ID!
-    ): Report
-    
-    "Requires ADMIN"
-    updateReport(
-        id: ID!
-        type: String
-        title: String
-        body: String
     ): Report
     
     "Requires ADMIN"
